@@ -1,0 +1,2 @@
+GET   http://172.21.242.106:8000/ip
+apikey: my-key
