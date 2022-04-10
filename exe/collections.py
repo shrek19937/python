@@ -1,9 +1,10 @@
 #list of python collection class
 #basic ops, CRUD
-#re
 #list comprehension
-
-from inspect import stack
+#file handling
+#exception handling
+#re
+#classes
 
 list1 = [1, 2, 3]
 list2 = [3, 4, 5]
@@ -32,18 +33,20 @@ def is_it_a_match(s):
     symbols = []
 
     for c in s:
-        #print(c, len(symbols))
+        try:
+            #print(c, len(symbols))
 
-        if c in openers:
-            symbols.append(c)
-        elif c in closers:
-            if len(symbols) == 0:
-                return False
+            if c in openers:
+                symbols.append(c)
+            elif c in closers:
+                if len(symbols) == 0:
+                    return False
 
-            oc = symbols.pop()
-            if openers[oc] != c:
-                return False
-        else:
+                oc = symbols.pop()
+                if openers[oc] != c:
+                    return False
+        except Exception as e:  #some char that's neither an opener, nor a closer
+            print(f"caught exception {e}")
             continue #ignore it
     
     if len(symbols) == 0:
