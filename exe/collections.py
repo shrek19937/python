@@ -1,16 +1,18 @@
 #list of python collection class
 #basic ops, CRUD
 #list comprehension
+#classes
 #file handling
 #exception handling
 #re
-#classes
+
+from pathlib import Path
 
 list1 = [1, 2, 3]
 list2 = [3, 4, 5]
 
-#find common list
-#common = [ i for i in list1 if i in list2 ]; print(common)
+#list comprehension
+common = [ i for i in list1 if i in list2 ]; print(common)   #find common list
 
 class auser:
     def __init__(self, id, fname, lname):
@@ -24,6 +26,11 @@ class auser:
 auser = auser(1, "michael", "wu")
 print(auser)
 
+def read_file(fname):
+    with open(fname, "r") as f:
+        for line in f:
+            print(f"{line}", end = "")
+read_file(f"{str(Path.home())}/python-code/exe/read-stdin.py")
 
 #stack to validate match parameters
 openers = { '{':'}', '[':']', '(':')' }
