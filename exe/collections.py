@@ -6,6 +6,7 @@
 #list comprehension
 #re
 from pathlib import Path
+import re
 
 #python class
 class auser:
@@ -18,7 +19,7 @@ class auser:
         return f"{self.id}, {self.fname}, {self.lname}"
 
 auser = auser(1, "michael", "wu")
-print(auser)
+print(f"{auser.id} - {auser.lname.upper()}, {auser.fname}")
 
 #file handling
 def print_file(fname):
@@ -26,7 +27,7 @@ def print_file(fname):
         for line in f:
             print(f"{line}", end = "")
     print()
-print_file(f"{str(Path.home())}/python-code/exe/read-stdin.py")
+#print_file(f"{str(Path.home())}/python-code/exe/read-stdin.py")
 
 #collection data types
 #  list, tuple, set, dictionary. stack could be implemented using list, see below
@@ -34,10 +35,10 @@ print_file(f"{str(Path.home())}/python-code/exe/read-stdin.py")
 list1 = [1, 2, 3]
 list2 = [3, 4, 5]
 aset  = set()
-aset.add(1); aset.add(5), aset.add("A")
+aset.add(1); aset.add(5); aset.add("A")
 adict = {"a":1, "b":2, "c":3}
-adict.update({"d":4})  #dict add/update
-adict["e"] = 5         #dict add
+adict.update({"d":4})  #dict add/update with update()
+adict["e"] = 5         #dict add/update with subscript
 print(aset)
 print(adict)
 atuple = ("fname", "shrek")
@@ -72,12 +73,49 @@ def is_it_a_match(s):
         except Exception as e:  #some char that's neither an opener, nor a closer
             print(f"caught exception {e}")
             continue #ignore it
-    
+
     if len(symbols) == 0:
         return True
 
     return False
 
+#strings
+astr = "this#is-one(1)/string/for&testing*regex-patterns!"
+print(astr[2])
+try:
+    print(astr[24444])
+except IndexError as e:
+    print(f"error: caught - {e}")
+
+print(astr[2:3])
+print(astr[-8:-5])  #positive number count from ^, while negive number counts from $
+
+#regex
+#findall()
+print("re.findall()")
+print(re.findall('str', astr))
+
+#split()
+print("re.split()")
+p = re.compile('string'); print(re.split(p, astr))
+
+#re.sub(pattern, replacement, str)
+
+#re.search()
+print("re.groups()")
+string = "Join Zoom Meeting https://fb.zoom.us/j/99337575373?pwd=YkJ1c1RJZGE1TG9peVVhYmxSWDlFQT09   #This is to intentionally making it harder"
+p = re.compile("(?P<url>https?://[^\s]+)")
+slist  = []
+prev_end = 0
+for m in p.finditer(string):
+    print(m.start(), m.end(), m.span(), m.group())
+    slist.append(string[prev_end:m.start()])
+    slist.append(string[m.start():m.end()])
+    prev_end = m.end()
+slist.append(string[prev_end:])
+print(slist)
+
+
 if __name__ == "__main__":
     print(is_it_a_match("{[] ()}"))
-    print(is_it_a_match("{[]()}]"))
+    #print(is_it_a_match("{[]()}]"))
